@@ -1,0 +1,68 @@
+@model MerchStore.WebUI.Models.Catalog.ProductCatalogViewModel
+
+@{
+    ViewData["Title"] = "MerchStore - Products";
+}
+
+<style>
+    .product-image {
+        object-fit: cover;
+        height: 200px;
+        width: 100%;
+    }
+</style>
+
+<div class="text-center">
+    <h1 class="display-4 mb-4">Product Catalog</h1>
+    <p class="lead mb-5">Browse our awesome merchandise below!</p>
+</div>
+
+@if (Model.FeaturedProducts.Any())
+{
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var product in Model.FeaturedProducts)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    @if (product.HasImage)
+                    {
+                        <img src="@product.ImageUrl" class="card-img-top product-image" alt="@product.Name">
+                    }
+                    else
+                    {
+                        <div class="card-img-top bg-light text-center p-5">
+                            <span class="text-muted">No image available</span>
+                        </div>
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text">@product.TruncatedDescription</p>
+                    </div>
+                    <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                        <span class="text-primary fw-bold">@product.FormattedPrice</span>
+                        <div>
+                            @if (product.InStock)
+                            {
+                                <span class="badge bg-success me-2">In Stock</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger me-2">Out of Stock</span>
+                            }
+                            <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-outline-primary btn-sm">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-info text-center">
+        <h2>No products available</h2>
+        <p>Check back soon for our latest merchandise!</p>
+    </div>
+}
