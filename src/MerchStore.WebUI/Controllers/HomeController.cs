@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MerchStore.WebUI.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MerchStore.WebUI.Controllers;
 
@@ -28,4 +29,17 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+
+
+
+
+// ... existing code ...
+
+[Authorize] // This attribute ensures that only authenticated users can access this action.
+public IActionResult WhoAmI()
+{
+    return View();
 }
+}
+
+

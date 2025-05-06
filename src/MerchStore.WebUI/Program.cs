@@ -8,6 +8,9 @@ using MerchStore.WebUI.Endpoints;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
+// add at the very top with your other usings
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // ✅ Snake_case JSON formatting
@@ -19,16 +22,18 @@ builder.Services.AddControllersWithViews()
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
-// ✅ CORS policy
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAllOrigins", policy =>
+// ✅ Snake_case JSON formatting
+builder.Services.AddControllersWithViews()
+    .AddJsonOptions(options =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        options.JsonSerializerOptions.PropertyNamingPolicy = new JsonSnakeCaseNamingPolicy();
+        options.JsonSerializerOptions.DictionaryKeyPolicy = new JsonSnakeCaseNamingPolicy();
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
-});
+
+// — Insert cookie auth here, before API Key —
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie();
 
 // ✅ API Key authentication
 builder.Services.AddAuthentication()
@@ -43,7 +48,7 @@ builder.Services.AddAuthorization(options =>
               .RequireAuthenticatedUser());
 });
 
-// ✅ Application & Infrastructure services
+// ✅ App & infra services
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
@@ -126,7 +131,8 @@ app.UseRouting();
 // ✅ CORS must come BEFORE auth
 app.UseCors("AllowAllOrigins");
 
-app.UseAuthentication();
+// — Authentication middleware —
+app.UseAuthentication(); // cookie + API Key
 app.UseAuthorization();
 
 // ✅ Swagger UI
@@ -145,3 +151,6 @@ app.MapControllerRoute(
 app.MapMinimalProductEndpoints();
 
 app.Run();
+
+
+

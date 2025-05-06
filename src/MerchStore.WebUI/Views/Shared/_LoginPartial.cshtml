@@ -1,0 +1,25 @@
+@using Microsoft.AspNetCore.Authentication.Cookies;
+
+<ul class="navbar-nav ms-auto">
+    @if (User.Identity != null && User.Identity.IsAuthenticated && User.Identity.AuthenticationType == CookieAuthenticationDefaults.AuthenticationScheme)
+    {
+        @* The user is authenticated and the authentication type is CookieAuthenticationDefaults.AuthenticationScheme *@
+        <li class="nav-item d-flex align-items-center">
+            <span class="navbar-text text-dark me-3">Hello @User.Identity.Name!</span>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" asp-controller="Account" asp-action="Logout" method="post">
+                 @* Add Antiforgery token for POST logout *@
+                 @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-primary">Logout</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        @* The user is not authenticated *@
+        <li class="nav-item">
+            <a class="btn btn-primary" asp-controller="Account" asp-action="Login">Login</a>
+        </li>
+    }
+</ul>
