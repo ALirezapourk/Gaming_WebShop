@@ -1,0 +1,21 @@
+### Get all products
+GET http://localhost:5004/api/basic/products
+
+### Get product by ID (replace with a valid ID)
+GET http://localhost:5004/api/basic/products/0016e342-ca46-4ee2-8302-3ab16e4817e9
+
+### Get product with invalid ID (404 response)
+GET http://localhost:5004/api/basic/products/00000000-0000-0000-0000-000000000000
+
+### Get all products (without API key - should fail)
+GET http://localhost:5004/api/basic/products
+
+### Get all products (with valid API key)
+GET http://localhost:5004/api/basic/products
+X-API-Key: API_KEY
+
+GET http://localhost:5004/api/minimal/products
+
+GET http://localhost:5004/api/minimal/products/02af993d-7f14-4cbf-ad73-12811a24ee71
+
+GET http://localhost:5004/api/basic/products/02af993d-7f14-4cbf-ad73-12811a24ee71

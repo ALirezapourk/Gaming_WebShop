@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MerchStore Client</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>MerchStore Product Catalog</h1>
+        <p class="subtitle">External Client Demo</p>
+    </header>
+
+    <main>
+        <!-- API Connection Status -->
+        <section class="status-container">
+            <div id="api-status" class="status-indicator pending">
+                Connecting to API...
+            </div>
+        </section>
+
+        <!-- Product Grid -->
+        <section class="products-container">
+            <h2>Products</h2>
+            <div id="products-grid" class="products-grid">
+                <div class="loader"></div>
+            </div>
+        </section>
+
+        <!-- Product Details Modal -->
+        <div id="product-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <div id="product-details" class="product-details">
+                    <!-- Product details will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Product Card Template -->
+    <template id="product-card-template">
+        <div class="product-card">
+            <div class="product-image">
+                <img src="" alt="Product Image">
+            </div>
+            <div class="product-info">
+                <h3 class="product-name"></h3>
+                <p class="product-price"></p>
+                <p class="product-stock"></p>
+                <button class="view-details-button">View Details</button>
+            </div>
+        </div>
+    </template>
+
+    <footer>
+        <p>&copy; 2025 MerchStore Demo Client</p>
+    </footer>
+
+    <!-- Include JavaScript file -->
+    <script src="app.js"></script>
+</body>
+</html>
